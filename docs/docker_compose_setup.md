@@ -27,7 +27,7 @@ services:
       - loan_engine_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U loan_engine_user -d loan_engine_db"]
+      test: [ "CMD-SHELL", "pg_isready -U loan_engine_user -d loan_engine_db" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -44,7 +44,7 @@ services:
       - loan_engine_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "redis-cli", "ping"]
+      test: [ "CMD", "redis-cli", "ping" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -52,8 +52,8 @@ services:
   # Loan Engine Application
   loan-engine:
     build:
-      context: .
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: ../Dockerfile
     container_name: loan_engine_app
     ports:
       - "8080:8080"
@@ -77,7 +77,7 @@ services:
       - loan_engine_network
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      test: [ "CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health" ]
       interval: 30s
       timeout: 10s
       retries: 3
