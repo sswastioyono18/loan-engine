@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/kitabisa/loan-engine/internal/models"
+	"github.com/sswastioyono18/loan-engine/internal/models"
 )
 
 type LoanApprovalRepository interface {

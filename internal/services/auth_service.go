@@ -3,11 +3,12 @@ package services
 import (
 	"context"
 	"fmt"
-	"github.com/kitabisa/loan-engine/internal/models"
-	"github.com/kitabisa/loan-engine/internal/repositories"
-	"golang.org/x/crypto/bcrypt"
 	"time"
+
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/sswastioyono18/loan-engine/internal/models"
+	"github.com/sswastioyono18/loan-engine/internal/repositories"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type AuthService interface {

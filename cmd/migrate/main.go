@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/kitabisa/loan-engine/pkg/util"
 	"github.com/pressly/goose/v3"
+	"github.com/sswastioyono18/loan-engine/pkg/util"
 
 	_ "github.com/lib/pq" // Import PostgreSQL driver
 )

@@ -14,35 +14,7 @@ Before testing, ensure you have:
 
 The loan engine includes a database migration system using Goose to manage schema changes. Migrations need to be run manually before starting the application.
 
-### Running Migrations
 
-To run migrations, use the migration tool:
-
-```bash
-# Build the migration tool
-go build -o migrate ./cmd/migrate
-
-# Apply all pending migrations
-./migrate -action up
-
-# Check migration status
-./migrate -action status
-
-# Rollback the last migration (not recommended in production)
-./migrate -action down
-
-# Run migrations from a custom directory
-./migrate -action up -dir ./my-migrations
-```
-
-Before starting the application with Docker Compose, make sure to run migrations manually first.
-
-### Migration Files
-
-Migration files are stored in the `migrations/` directory and follow the naming convention:
-`{version}_{description}.sql`
-
-Example: `001_create_loan_engine_tables.sql`
 ## Running the Application
 
 ### 1. Using Docker Compose (Recommended)
@@ -72,6 +44,32 @@ cp .env.example .env
 go run main.go
 
 # The API will be available at http://localhost:8080
+```
+
+## Running Migrations
+
+After DB up, you need to run migrations, use the migration tool:
+
+```bash
+# Build the migration tool
+go build -o migrate ./cmd/migrate
+
+# Apply all pending migrations
+./migrate -action up
+
+# Check migration status
+./migrate -action status
+
+# Rollback the last migration (not recommended in production)
+./migrate -action down
+
+# Run migrations from a custom directory
+./migrate -action up -dir ./my-migrations
+```
+
+or if you dont want to build / doesnt want to install go
+```
+docker compose exec loan-engine go run cmd/migrate/main.go -action up                                                                                                                                                                          
 ```
 
 ## API Testing Guide

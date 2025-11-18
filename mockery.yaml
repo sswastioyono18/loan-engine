@@ -1,0 +1,19 @@
+# Mockery configuration file
+with-expecter: true
+dir: mocks
+outpkg: mocks
+packages:
+  github.com/sswastioyono18/loan-engine/internal/repositories:
+    interfaces:
+      UserRepository:
+      LoanRepository:
+      BorrowerRepository:
+      InvestorRepository:
+      LoanApprovalRepository:
+      LoanDisbursementRepository:
+      LoanInvestmentRepository:
+      LoanStateHistoryRepository:
+  github.com/sswastioyono18/loan-engine/pkg/external:
+    interfaces:
+      EmailService:
+      StorageService:

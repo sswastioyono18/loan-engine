@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/kitabisa/loan-engine/internal/repositories"
-	"github.com/kitabisa/loan-engine/pkg/external"
+	"github.com/sswastioyono18/loan-engine/internal/repositories"
+	"github.com/sswastioyono18/loan-engine/pkg/external"
 )
 
 type ServiceFactory struct {

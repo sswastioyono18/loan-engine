@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/kitabisa/loan-engine/internal/handlers"
-	"github.com/kitabisa/loan-engine/internal/repositories"
-	"github.com/kitabisa/loan-engine/internal/services"
-	"github.com/kitabisa/loan-engine/pkg/external"
+	"github.com/sswastioyono18/loan-engine/internal/handlers"
+	"github.com/sswastioyono18/loan-engine/internal/repositories"
+	"github.com/sswastioyono18/loan-engine/internal/services"
+	"github.com/sswastioyono18/loan-engine/pkg/external"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 	dbName := getEnv("DB_NAME", "loan_engine_db")
 	dbSslMode := getEnv("DB_SSL_MODE", "disable")
 	jwtSecret := getEnv("JWT_SECRET", "your_jwt_secret_key_here")
-	
+
 	// Build connection string
 	connectionString := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		dbHost, dbPort, dbUser, dbPassword, dbName, dbSslMode)
@@ -50,7 +50,7 @@ func main() {
 
 	// Get port from environment or use default
 	port := getEnv("PORT", "8080")
-	
+
 	// Start server
 	log.Printf("Starting server on port %s", port)
 	log.Fatal(http.ListenAndServe(":"+port, router))

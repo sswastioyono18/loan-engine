@@ -6,17 +6,17 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/kitabisa/loan-engine/internal/models"
-	"github.com/kitabisa/loan-engine/internal/services"
-	"github.com/kitabisa/loan-engine/pkg/external"
+	"github.com/sswastioyono18/loan-engine/internal/models"
+	"github.com/sswastioyono18/loan-engine/internal/services"
+	"github.com/sswastioyono18/loan-engine/pkg/external"
 
 	"github.com/go-chi/chi/v5"
 )
 
 type LoanHandler struct {
-	loanService      services.LoanService
-	emailService     external.EmailService
-	storageService   external.StorageService
+	loanService    services.LoanService
+	emailService   external.EmailService
+	storageService external.StorageService
 }
 
 func NewLoanHandler(loanService services.LoanService, emailService external.EmailService, storageService external.StorageService) *LoanHandler {
@@ -222,8 +222,8 @@ func (h *LoanHandler) DisburseLoan(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var disbursementData struct {
-		FieldOfficerEmployeeID      string `json:"field_officer_employee_id"`
-		AgreementLetterSignedUrl    string `json:"agreement_letter_signed_url"`
+		FieldOfficerEmployeeID   string `json:"field_officer_employee_id"`
+		AgreementLetterSignedUrl string `json:"agreement_letter_signed_url"`
 	}
 
 	if err := json.NewDecoder(r.Body).Decode(&disbursementData); err != nil {
@@ -232,8 +232,8 @@ func (h *LoanHandler) DisburseLoan(w http.ResponseWriter, r *http.Request) {
 	}
 
 	model := &models.LoanDisbursement{
-		FieldOfficerEmployeeID:      disbursementData.FieldOfficerEmployeeID,
-		AgreementLetterSignedUrl:    disbursementData.AgreementLetterSignedUrl,
+		FieldOfficerEmployeeID:   disbursementData.FieldOfficerEmployeeID,
+		AgreementLetterSignedUrl: disbursementData.AgreementLetterSignedUrl,
 	}
 
 	if err := h.loanService.DisburseLoan(r.Context(), loanID, model); err != nil {

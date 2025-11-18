@@ -102,7 +102,7 @@ State transitions can only move forward, never backward.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/kitabisa/loan-engine.git
+   git clone https://github.com/sswastioyono18/loan-engine.git
    cd loan-engine
    ```
 

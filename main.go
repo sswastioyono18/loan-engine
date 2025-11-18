@@ -6,11 +6,11 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/kitabisa/loan-engine/internal/handlers"
-	"github.com/kitabisa/loan-engine/internal/repositories"
-	"github.com/kitabisa/loan-engine/internal/services"
-	"github.com/kitabisa/loan-engine/pkg/external"
-	"github.com/kitabisa/loan-engine/pkg/util"
+	"github.com/sswastioyono18/loan-engine/internal/handlers"
+	"github.com/sswastioyono18/loan-engine/internal/repositories"
+	"github.com/sswastioyono18/loan-engine/internal/services"
+	"github.com/sswastioyono18/loan-engine/pkg/external"
+	"github.com/sswastioyono18/loan-engine/pkg/util"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

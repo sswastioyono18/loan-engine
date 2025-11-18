@@ -2,8 +2,8 @@ package services
 
 import (
 	"context"
-	"github.com/kitabisa/loan-engine/internal/models"
-	"github.com/kitabisa/loan-engine/internal/repositories"
+	"github.com/sswastioyono18/loan-engine/internal/models"
+	"github.com/sswastioyono18/loan-engine/internal/repositories"
 )
 
 type InvestorService interface {

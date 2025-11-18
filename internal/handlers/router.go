@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 	"time"
-	
-	"github.com/kitabisa/loan-engine/internal/services"
+
+	"github.com/sswastioyono18/loan-engine/internal/services"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -18,7 +18,7 @@ func NewRouter(serviceFactory *services.ServiceFactory) http.Handler {
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.Timeout(60 * time.Second))
-	
+
 	// CORS configuration
 	router.Use(cors.Handler(cors.Options{
 		AllowedOrigins:   []string{"https://*", "http://*"},
@@ -73,7 +73,7 @@ func NewRouter(serviceFactory *services.ServiceFactory) http.Handler {
 		r.Delete("/loans/{id}", loanHandler.DeleteLoan)
 		r.Get("/loans", loanHandler.ListLoans)
 		r.Get("/loans/state/{state}", loanHandler.GetLoansByState)
-		
+
 		// Loan state transition routes
 		r.Post("/loans/{id}/approve", loanHandler.ApproveLoan)
 		r.Post("/loans/{id}/invest", loanHandler.InvestInLoan)
