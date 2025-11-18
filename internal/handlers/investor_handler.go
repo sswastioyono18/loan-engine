@@ -2,10 +2,11 @@ package handlers
 
 import (
 	"encoding/json"
-	"github.com/sswastioyono18/loan-engine/internal/models"
-	"github.com/sswastioyono18/loan-engine/internal/services"
 	"net/http"
 	"strconv"
+
+	"github.com/sswastioyono18/loan-engine/internal/models"
+	"github.com/sswastioyono18/loan-engine/internal/services"
 
 	"github.com/go-chi/chi/v5"
 )

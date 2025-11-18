@@ -2,8 +2,8 @@ package services
 
 import (
 	"context"
+
 	"github.com/sswastioyono18/loan-engine/internal/models"
-	"github.com/sswastioyono18/loan-engine/internal/repositories"
 )
 
 type InvestorService interface {
@@ -17,10 +17,10 @@ type InvestorService interface {
 }
 
 type investorServiceImpl struct {
-	repo repositories.InvestorRepository
+	repo InvestorRepository
 }
 
-func NewInvestorService(repo repositories.InvestorRepository) InvestorService {
+func NewInvestorService(repo InvestorRepository) InvestorService {
 	return &investorServiceImpl{
 		repo: repo,
 	}

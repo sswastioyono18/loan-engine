@@ -121,48 +121,12 @@ State transitions can only move forward, never backward.
 4. **Handlers**: HTTP endpoints in `internal/handlers/`
 5. **External Services**: Email and storage services in `pkg/external/`
 
-## Current System Limitations
-
-### 1. Mock Services
-- **Email Service**: Currently using mock implementation in [`pkg/external/email_service.go`](pkg/external/email_service.go) - not connected to actual email provider
-- **Storage Service**: Currently using mock implementation in [`pkg/external/storage_service.go`](pkg/external/storage_service.go) - not connected to actual cloud storage
-
-### 2. Authentication & Authorization
-- Basic authentication system may need enhancement for production use
-- Role-based access control could be more granular
-- No OAuth integration implemented
-
-### 3. Security Considerations
-- File upload validation for proof images and agreement letters could be enhanced
-- No rate limiting implemented on API endpoints
-- JWT token management could include more sophisticated refresh token strategies
-
-### 4. Scalability
-- No caching layer implemented (though Redis is configured in docker-compose)
-- Database queries may need optimization for large datasets
-- No horizontal scaling considerations implemented
-
-### 5. Monitoring & Observability
-- Limited logging implementation
-- No metrics collection or monitoring dashboards
-- No distributed tracing implemented
-
-### 6. Data Validation
-- While business logic validation is comprehensive, input validation could be more robust
-- No validation for file types and sizes in document uploads
-
-### 7. Error Handling
-- Error responses follow a standard format but could include more detailed error codes
-- Some error messages might be too technical for end users
-
-### 8. Testing Coverage
-- While unit tests exist, integration and end-to-end tests could be more comprehensive
-- No performance testing implemented
-
-## Conclusion
-
-All original requirements for the loan engine have been successfully implemented. The system provides a complete loan lifecycle management solution with proper state transitions, validation, and audit trails. The architecture follows clean code principles with separation of concerns between models, repositories, services, and handlers.
-
-The system is production-ready from a functional perspective but would benefit from addressing the limitations mentioned above before full production deployment, particularly around using real email and storage services instead of mocks, implementing proper security measures, and adding monitoring capabilities.
-
-The codebase includes comprehensive documentation in the `docs/` directory covering API endpoints, database schema, repository patterns, service layer architecture, and state transition validation.
+## Limitation & assumption
+- Assumed that same borrower can submit multiple loan request. I did not validate any of this
+- System did not validate whether inside the picture proof validator visited the borrower is real. It just checks whether the payload is empty or not
+- System did not validate the content signed loan agreement process. I assume this is handled outside of the system. The system just knew the url is there. There is no logic to check is it real signed or not.
+- Sending email is mocked
+- No auth, RBAC or token implemented for now to request, approve and disbursed
+- No caching implemented yet (redis is there though)
+- No observability
+- Technical implementation of json and db shared a struct. I assume this is a PoC, i dont really care about splitting entity/domain model

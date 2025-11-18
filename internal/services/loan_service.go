@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/sswastioyono18/loan-engine/internal/models"
-	"github.com/sswastioyono18/loan-engine/internal/repositories"
 	"github.com/sswastioyono18/loan-engine/pkg/external"
 )
 
@@ -30,23 +29,23 @@ type LoanService interface {
 }
 
 type loanServiceImpl struct {
-	loanRepo             repositories.LoanRepository
-	loanApprovalRepo     repositories.LoanApprovalRepository
-	loanDisbursementRepo repositories.LoanDisbursementRepository
-	loanInvestmentRepo   repositories.LoanInvestmentRepository
-	loanStateHistoryRepo repositories.LoanStateHistoryRepository
-	investorRepo         repositories.InvestorRepository
+	loanRepo             LoanRepository
+	loanApprovalRepo     LoanApprovalRepository
+	loanDisbursementRepo LoanDisbursementRepository
+	loanInvestmentRepo   LoanInvestmentRepository
+	loanStateHistoryRepo LoanStateHistoryRepository
+	investorRepo         InvestorRepository
 	emailService         external.EmailService
 	storageService       external.StorageService
 }
 
 func NewLoanService(
-	loanRepo repositories.LoanRepository,
-	loanApprovalRepo repositories.LoanApprovalRepository,
-	loanDisbursementRepo repositories.LoanDisbursementRepository,
-	loanInvestmentRepo repositories.LoanInvestmentRepository,
-	loanStateHistoryRepo repositories.LoanStateHistoryRepository,
-	investorRepo repositories.InvestorRepository,
+	loanRepo LoanRepository,
+	loanApprovalRepo LoanApprovalRepository,
+	loanDisbursementRepo LoanDisbursementRepository,
+	loanInvestmentRepo LoanInvestmentRepository,
+	loanStateHistoryRepo LoanStateHistoryRepository,
+	investorRepo InvestorRepository,
 	emailService external.EmailService,
 	storageService external.StorageService,
 ) LoanService {

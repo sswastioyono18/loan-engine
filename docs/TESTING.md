@@ -7,7 +7,7 @@ This document provides comprehensive instructions on how to test the loan engine
 Before testing, ensure you have:
 
 - Docker and Docker Compose installed
-- Go 1.19+ installed (for running tests locally)
+- Go 1.24+ installed (for running tests locally)
 - A tool to make HTTP requests (curl, Postman, Insomnia, etc.)
 
 ## Database Migrations
@@ -65,11 +65,6 @@ go build -o migrate ./cmd/migrate
 
 # Run migrations from a custom directory
 ./migrate -action up -dir ./my-migrations
-```
-
-or if you dont want to build / doesnt want to install go
-```
-docker compose exec loan-engine go run cmd/migrate/main.go -action up                                                                                                                                                                          
 ```
 
 ## API Testing Guide

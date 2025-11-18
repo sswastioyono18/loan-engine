@@ -3,7 +3,6 @@ package services
 import (
 	"context"
 	"github.com/sswastioyono18/loan-engine/internal/models"
-	"github.com/sswastioyono18/loan-engine/internal/repositories"
 )
 
 type BorrowerService interface {
@@ -16,10 +15,10 @@ type BorrowerService interface {
 }
 
 type borrowerServiceImpl struct {
-	repo repositories.BorrowerRepository
+	repo BorrowerRepository
 }
 
-func NewBorrowerService(repo repositories.BorrowerRepository) BorrowerService {
+func NewBorrowerService(repo BorrowerRepository) BorrowerService {
 	return &borrowerServiceImpl{
 		repo: repo,
 	}
