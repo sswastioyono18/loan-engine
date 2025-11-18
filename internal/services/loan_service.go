@@ -263,7 +263,11 @@ func (s *loanServiceImpl) InvestInLoan(ctx context.Context, loanID int, investme
 			}
 			
 			// Send investment confirmation email
-			err = s.emailService.SendInvestmentConfirmation(ctx, investor.Email, loan.AgreementLetterLink, fmt.Sprintf("Loan %s has been fully invested", loan.LoanID))
+			agreementLink := ""
+			if loan.AgreementLetterLink.Valid {
+				agreementLink = loan.AgreementLetterLink.String
+			}
+			err = s.emailService.SendInvestmentConfirmation(ctx, investor.Email, agreementLink, fmt.Sprintf("Loan %s has been fully invested", loan.LoanID))
 			if err != nil {
 				// Log error but continue with other investors
 			}

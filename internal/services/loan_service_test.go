@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"database/sql"
 	"errors"
 	"io"
 	"testing"
@@ -362,7 +363,7 @@ func TestCreateLoan(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 	}
 
 	mockLoanRepo.On("Create", context.Background(), loan).Return(nil)
@@ -393,7 +394,7 @@ func TestApproveLoan(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 		CurrentState:        "proposed",
 	}
 
@@ -434,7 +435,7 @@ func TestApproveLoanInvalidState(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 		CurrentState:        "approved", // Already approved
 	}
 
@@ -471,7 +472,7 @@ func TestInvestInLoan(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 		CurrentState:        "approved",
 		TotalInvestedAmount: 0.0,
 	}
@@ -512,7 +513,7 @@ func TestInvestInLoanExceedsPrincipal(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 		CurrentState:        "approved",
 		TotalInvestedAmount: 5000.0,
 	}
@@ -550,14 +551,14 @@ func TestDisburseLoan(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 		CurrentState:        "invested",
 		TotalInvestedAmount: 10000.0,
 	}
 
 	disbursement := &models.LoanDisbursement{
-		FieldOfficerEmployeeID:      "emp002",
-		AgreementLetterSignedUrl:    "https://example.com/signed-agreement.pdf",
+		FieldOfficerEmployeeID:   "emp002",
+		AgreementLetterSignedUrl: "https://example.com/signed-agreement.pdf",
 	}
 
 	mockLoanRepo.On("GetByID", context.Background(), loanID).Return(loan, nil)
@@ -592,14 +593,14 @@ func TestDisburseLoanInvalidState(t *testing.T) {
 		PrincipalAmount:     10000.0,
 		Rate:                0.05,
 		ROI:                 0.08,
-		AgreementLetterLink: "https://example.com/agreement.pdf",
+		AgreementLetterLink: sql.NullString{String: "https://example.com/agreement.pdf", Valid: true},
 		CurrentState:        "proposed", // Not invested yet
 		TotalInvestedAmount: 0.0,
 	}
 
 	disbursement := &models.LoanDisbursement{
-		FieldOfficerEmployeeID:      "emp002",
-		AgreementLetterSignedUrl:    "https://example.com/signed-agreement.pdf",
+		FieldOfficerEmployeeID:   "emp002",
+		AgreementLetterSignedUrl: "https://example.com/signed-agreement.pdf",
 	}
 
 	mockLoanRepo.On("GetByID", context.Background(), loanID).Return(loan, nil)

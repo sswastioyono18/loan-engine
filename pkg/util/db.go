@@ -12,7 +12,7 @@ import (
 
 // DB represents a database connection wrapper that implements the Driver interface
 type DB struct {
-	DB *sql.DB
+	DB     *sql.DB
 	SqlxDB *sqlx.DB
 }
 
@@ -44,25 +44,25 @@ func InitDB() (*DB, error) {
 	if host == "" {
 		host = "localhost"
 	}
-	
+
 	port := os.Getenv("DB_PORT")
 	if port == "" {
 		port = "5432"
 	}
-	
+
 	user := os.Getenv("DB_USER")
 	if user == "" {
-		user = "postgres"
+		user = "loan_engine_user"
 	}
-	
+
 	password := os.Getenv("DB_PASSWORD")
 	if password == "" {
-		password = "postgres"
+		password = "loan_engine_password"
 	}
-	
+
 	dbname := os.Getenv("DB_NAME")
 	if dbname == "" {
-		dbname = "loan_engine"
+		dbname = "loan_engine_db"
 	}
 
 	// Construct connection string

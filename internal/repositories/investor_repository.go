@@ -29,7 +29,7 @@ func NewInvestorRepository(driver Driver) InvestorRepository {
 
 func (r *investorRepositoryImpl) Create(ctx context.Context, investor *models.Investor) error {
 	query := `
-		INSERT INTO investors (investor_id, full_name, email, phone)
+		INSERT INTO investors (investor_id, name, email, phone)
 		VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at, updated_at
 	`
@@ -44,7 +44,7 @@ func (r *investorRepositoryImpl) Create(ctx context.Context, investor *models.In
 
 func (r *investorRepositoryImpl) GetByID(ctx context.Context, id int) (*models.Investor, error) {
 	query := `
-		SELECT id, investor_id, full_name, email, phone, created_at, updated_at
+		SELECT id, investor_id, name, email, phone, created_at, updated_at
 		FROM investors WHERE id = $1
 	`
 
@@ -62,7 +62,7 @@ func (r *investorRepositoryImpl) GetByID(ctx context.Context, id int) (*models.I
 
 func (r *investorRepositoryImpl) GetByInvestorID(ctx context.Context, investorID string) (*models.Investor, error) {
 	query := `
-		SELECT id, investor_id, full_name, email, phone, created_at, updated_at
+		SELECT id, investor_id, name, email, phone, created_at, updated_at
 		FROM investors WHERE investor_id = $1
 	`
 
@@ -80,7 +80,7 @@ func (r *investorRepositoryImpl) GetByInvestorID(ctx context.Context, investorID
 
 func (r *investorRepositoryImpl) GetByEmail(ctx context.Context, email string) (*models.Investor, error) {
 	query := `
-		SELECT id, investor_id, full_name, email, phone, created_at, updated_at
+		SELECT id, investor_id, name, email, phone, created_at, updated_at
 		FROM investors WHERE email = $1
 	`
 
@@ -99,7 +99,7 @@ func (r *investorRepositoryImpl) GetByEmail(ctx context.Context, email string) (
 func (r *investorRepositoryImpl) Update(ctx context.Context, investor *models.Investor) error {
 	query := `
 		UPDATE investors SET
-			investor_id = $1, full_name = $2, email = $3,
+			investor_id = $1, name = $2, email = $3,
 			phone = $4, updated_at = NOW()
 		WHERE id = $5
 	`
@@ -147,7 +147,7 @@ func (r *investorRepositoryImpl) Delete(ctx context.Context, id int) error {
 
 func (r *investorRepositoryImpl) List(ctx context.Context, offset, limit int) ([]*models.Investor, error) {
 	query := `
-		SELECT id, investor_id, full_name, email, phone, created_at, updated_at
+		SELECT id, investor_id, name, email, phone, created_at, updated_at
 		FROM investors
 		ORDER BY created_at DESC
 		LIMIT $1 OFFSET $2

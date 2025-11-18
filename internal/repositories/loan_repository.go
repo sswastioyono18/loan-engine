@@ -33,18 +33,24 @@ func NewLoanRepository(driver Driver) LoanRepository {
 func (r *loanRepositoryImpl) Create(ctx context.Context, loan *models.Loan) error {
 	query := `
 		INSERT INTO loans (
-			loan_id, borrower_id, principal_amount, rate, roi,
+			borrower_id, principal_amount, rate, roi,
 			agreement_letter_link, current_state, total_invested_amount
-		) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+		) VALUES ($1, $2, $3, $4, $5, $6, $7)
 		RETURNING id, created_at, updated_at
 	`
 
 	err := r.base.GetUtilDB().QueryRowContext(
 		ctx, query,
-		loan.LoanID, loan.BorrowerID, loan.PrincipalAmount,
+		loan.BorrowerID, loan.PrincipalAmount,
 		loan.Rate, loan.ROI, loan.AgreementLetterLink,
 		loan.CurrentState, loan.TotalInvestedAmount,
 	).Scan(&loan.ID, &loan.CreatedAt, &loan.UpdatedAt)
+
+	// After creation, fetch the generated loan_id
+	if err == nil {
+		fetchQuery := "SELECT loan_id FROM loans WHERE id = $1"
+		err = r.base.GetUtilDB().GetContext(ctx, &loan.LoanID, fetchQuery, loan.ID)
+	}
 
 	return err
 }
@@ -143,13 +149,15 @@ func (r *loanRepositoryImpl) Delete(ctx context.Context, id int) error {
 func (r *loanRepositoryImpl) List(ctx context.Context, state *string, offset, limit int) ([]*models.Loan, error) {
 	query := "SELECT id, loan_id, borrower_id, principal_amount, rate, roi, agreement_letter_link, current_state, total_invested_amount, created_at, updated_at FROM loans"
 	args := []interface{}{}
+	paramIndex := 1
 
 	if state != nil {
-		query += " WHERE current_state = $1"
+		query += fmt.Sprintf(" WHERE current_state = $%d", paramIndex)
 		args = append(args, *state)
+		paramIndex++
 	}
 
-	query += " ORDER BY created_at DESC LIMIT $2 OFFSET $3"
+	query += fmt.Sprintf(" ORDER BY created_at DESC LIMIT $%d OFFSET $%d", paramIndex, paramIndex+1)
 	args = append(args, limit, offset)
 
 	var loans []*models.Loan

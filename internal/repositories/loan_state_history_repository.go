@@ -27,7 +27,7 @@ func NewLoanStateHistoryRepository(driver Driver) LoanStateHistoryRepository {
 func (r *loanStateHistoryRepositoryImpl) Create(ctx context.Context, history *models.LoanStateHistory) error {
 	query := `
 		INSERT INTO loan_state_history (
-			loan_id, previous_state, new_state, transition_reason
+			loan_id, old_state, new_state, reason
 		) VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at
 	`
@@ -42,7 +42,7 @@ func (r *loanStateHistoryRepositoryImpl) Create(ctx context.Context, history *mo
 
 func (r *loanStateHistoryRepositoryImpl) GetByLoanID(ctx context.Context, loanID int) ([]*models.LoanStateHistory, error) {
 	query := `
-		SELECT id, loan_id, previous_state, new_state, transition_reason, created_at
+		SELECT id, loan_id, old_state, new_state, reason, created_at
 		FROM loan_state_history WHERE loan_id = $1
 		ORDER BY created_at ASC
 	`
@@ -58,7 +58,7 @@ func (r *loanStateHistoryRepositoryImpl) GetByLoanID(ctx context.Context, loanID
 
 func (r *loanStateHistoryRepositoryImpl) GetLatestByLoanID(ctx context.Context, loanID int) (*models.LoanStateHistory, error) {
 	query := `
-		SELECT id, loan_id, previous_state, new_state, transition_reason, created_at
+		SELECT id, loan_id, old_state, new_state, reason, created_at
 		FROM loan_state_history
 		WHERE loan_id = $1
 		ORDER BY created_at DESC
@@ -79,7 +79,7 @@ func (r *loanStateHistoryRepositoryImpl) GetLatestByLoanID(ctx context.Context, 
 
 func (r *loanStateHistoryRepositoryImpl) List(ctx context.Context, loanID int, offset, limit int) ([]*models.LoanStateHistory, error) {
 	query := `
-		SELECT id, loan_id, previous_state, new_state, transition_reason, created_at
+		SELECT id, loan_id, old_state, new_state, reason, created_at
 		FROM loan_state_history
 		WHERE loan_id = $1
 		ORDER BY created_at DESC

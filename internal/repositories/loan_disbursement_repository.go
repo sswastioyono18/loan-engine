@@ -28,7 +28,7 @@ func NewLoanDisbursementRepository(driver Driver) LoanDisbursementRepository {
 func (r *loanDisbursementRepositoryImpl) Create(ctx context.Context, disbursement *models.LoanDisbursement) error {
 	query := `
 		INSERT INTO loan_disbursements (
-			loan_id, field_officer_employee_id, disbursement_date,
+			loan_id, field_officer_employee_id, disbursed_at,
 			agreement_letter_signed_url
 		) VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at
@@ -45,7 +45,7 @@ func (r *loanDisbursementRepositoryImpl) Create(ctx context.Context, disbursemen
 
 func (r *loanDisbursementRepositoryImpl) GetByLoanID(ctx context.Context, loanID int) (*models.LoanDisbursement, error) {
 	query := `
-		SELECT id, loan_id, field_officer_employee_id, disbursement_date,
+		SELECT id, loan_id, field_officer_employee_id, disbursed_at,
 		       agreement_letter_signed_url, created_at
 		FROM loan_disbursements WHERE loan_id = $1
 	`
@@ -64,7 +64,7 @@ func (r *loanDisbursementRepositoryImpl) GetByLoanID(ctx context.Context, loanID
 
 func (r *loanDisbursementRepositoryImpl) GetByID(ctx context.Context, id int) (*models.LoanDisbursement, error) {
 	query := `
-		SELECT id, loan_id, field_officer_employee_id, disbursement_date,
+		SELECT id, loan_id, field_officer_employee_id, disbursed_at,
 		       agreement_letter_signed_url, created_at
 		FROM loan_disbursements WHERE id = $1
 	`
@@ -84,7 +84,7 @@ func (r *loanDisbursementRepositoryImpl) GetByID(ctx context.Context, id int) (*
 func (r *loanDisbursementRepositoryImpl) Update(ctx context.Context, disbursement *models.LoanDisbursement) error {
 	query := `
 		UPDATE loan_disbursements SET
-			field_officer_employee_id = $1, disbursement_date = $2,
+			field_officer_employee_id = $1, disbursed_at = $2,
 			agreement_letter_signed_url = $3
 		WHERE id = $4
 	`

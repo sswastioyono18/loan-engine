@@ -29,7 +29,7 @@ func NewBorrowerRepository(driver Driver) BorrowerRepository {
 
 func (r *borrowerRepositoryImpl) Create(ctx context.Context, borrower *models.Borrower) error {
 	query := `
-		INSERT INTO borrowers (borrower_id_number, name, email, phone, address)
+		INSERT INTO borrowers (id_number, name, email, phone, address)
 		VALUES ($1, $2, $3, $4, $5)
 		RETURNING id, created_at, updated_at
 	`
@@ -45,7 +45,7 @@ func (r *borrowerRepositoryImpl) Create(ctx context.Context, borrower *models.Bo
 
 func (r *borrowerRepositoryImpl) GetByID(ctx context.Context, id int) (*models.Borrower, error) {
 	query := `
-		SELECT id, borrower_id_number, name, email, phone, address, created_at, updated_at
+		SELECT id, id_number, name, email, phone, address, created_at, updated_at
 		FROM borrowers WHERE id = $1
 	`
 
@@ -63,8 +63,8 @@ func (r *borrowerRepositoryImpl) GetByID(ctx context.Context, id int) (*models.B
 
 func (r *borrowerRepositoryImpl) GetByBorrowerIDNumber(ctx context.Context, borrowerIDNumber string) (*models.Borrower, error) {
 	query := `
-		SELECT id, borrower_id_number, name, email, phone, address, created_at, updated_at
-		FROM borrowers WHERE borrower_id_number = $1
+		SELECT id, id_number, name, email, phone, address, created_at, updated_at
+		FROM borrowers WHERE id_number = $1
 	`
 
 	var borrower models.Borrower
@@ -82,7 +82,7 @@ func (r *borrowerRepositoryImpl) GetByBorrowerIDNumber(ctx context.Context, borr
 func (r *borrowerRepositoryImpl) Update(ctx context.Context, borrower *models.Borrower) error {
 	query := `
 		UPDATE borrowers SET
-			borrower_id_number = $1, name = $2, email = $3,
+			id_number = $1, name = $2, email = $3,
 			phone = $4, address = $5, updated_at = NOW()
 		WHERE id = $6
 	`
@@ -130,7 +130,7 @@ func (r *borrowerRepositoryImpl) Delete(ctx context.Context, id int) error {
 
 func (r *borrowerRepositoryImpl) List(ctx context.Context, offset, limit int) ([]*models.Borrower, error) {
 	query := `
-		SELECT id, borrower_id_number, name, email, phone, address, created_at, updated_at
+		SELECT id, id_number, name, email, phone, address, created_at, updated_at
 		FROM borrowers
 		ORDER BY created_at DESC
 		LIMIT $1 OFFSET $2

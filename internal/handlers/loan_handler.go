@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"net/http"
 	"strconv"
@@ -45,7 +46,7 @@ func (h *LoanHandler) CreateLoan(w http.ResponseWriter, r *http.Request) {
 		PrincipalAmount:     loan.PrincipalAmount,
 		Rate:                loan.Rate,
 		ROI:                 loan.ROI,
-		AgreementLetterLink: loan.AgreementLetterLink,
+		AgreementLetterLink: getNullString(loan.AgreementLetterLink),
 	}
 
 	if err := h.loanService.CreateLoan(r.Context(), model); err != nil {
@@ -97,7 +98,7 @@ func (h *LoanHandler) UpdateLoan(w http.ResponseWriter, r *http.Request) {
 		PrincipalAmount:     loan.PrincipalAmount,
 		Rate:                loan.Rate,
 		ROI:                 loan.ROI,
-		AgreementLetterLink: loan.AgreementLetterLink,
+		AgreementLetterLink: getNullString(loan.AgreementLetterLink),
 	}
 
 	if err := h.loanService.UpdateLoan(r.Context(), id, model); err != nil {
@@ -253,4 +254,12 @@ func (h *LoanHandler) GetLoansByState(w http.ResponseWriter, r *http.Request) {
 	}
 
 	SendSuccessResponse(w, loans, "Loans retrieved successfully")
+}
+
+// Helper function to convert string to sql.NullString
+func getNullString(s string) sql.NullString {
+	return sql.NullString{
+		String: s,
+		Valid:  s != "",
+	}
 }

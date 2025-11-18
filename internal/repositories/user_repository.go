@@ -30,7 +30,7 @@ func NewUserRepository(driver Driver) UserRepository {
 func (r *userRepositoryImpl) Create(ctx context.Context, user *models.User) error {
 	query := `
 		INSERT INTO users (
-			user_id, email, password_hash, user_type, full_name, is_active
+			user_id, email, password_hash, user_type, name, is_active
 		) VALUES ($1, $2, $3, $4, $5, $6)
 		RETURNING id, created_at, updated_at
 	`
@@ -47,7 +47,7 @@ func (r *userRepositoryImpl) Create(ctx context.Context, user *models.User) erro
 
 func (r *userRepositoryImpl) GetByID(ctx context.Context, id int) (*models.User, error) {
 	query := `
-		SELECT id, user_id, email, password_hash, user_type, full_name,
+		SELECT id, user_id, email, password_hash, user_type, name,
 		       is_active, created_at, updated_at
 		FROM users WHERE id = $1
 	`
@@ -67,7 +67,7 @@ func (r *userRepositoryImpl) GetByID(ctx context.Context, id int) (*models.User,
 
 func (r *userRepositoryImpl) GetByEmail(ctx context.Context, email string) (*models.User, error) {
 	query := `
-		SELECT id, user_id, email, password_hash, user_type, full_name,
+		SELECT id, user_id, email, password_hash, user_type, name,
 		       is_active, created_at, updated_at
 		FROM users WHERE email = $1
 	`
@@ -87,7 +87,7 @@ func (r *userRepositoryImpl) GetByEmail(ctx context.Context, email string) (*mod
 
 func (r *userRepositoryImpl) GetByUserID(ctx context.Context, userID string) (*models.User, error) {
 	query := `
-		SELECT id, user_id, email, password_hash, user_type, full_name,
+		SELECT id, user_id, email, password_hash, user_type, name,
 		       is_active, created_at, updated_at
 		FROM users WHERE user_id = $1
 	`
@@ -108,7 +108,7 @@ func (r *userRepositoryImpl) GetByUserID(ctx context.Context, userID string) (*m
 func (r *userRepositoryImpl) Update(ctx context.Context, user *models.User) error {
 	query := `
 		UPDATE users SET
-			user_id = $1, email = $2, user_type = $3, full_name = $4,
+			user_id = $1, email = $2, user_type = $3, name = $4,
 			is_active = $5, updated_at = NOW()
 		WHERE id = $6
 	`

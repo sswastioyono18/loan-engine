@@ -28,7 +28,7 @@ func NewLoanApprovalRepository(driver Driver) LoanApprovalRepository {
 func (r *loanApprovalRepositoryImpl) Create(ctx context.Context, approval *models.LoanApproval) error {
 	query := `
 		INSERT INTO loan_approvals (
-			loan_id, field_validator_employee_id, approval_date, proof_image_url
+			loan_id, field_validator_employee_id, approved_at, proof_image_url
 		) VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at
 	`
@@ -44,7 +44,7 @@ func (r *loanApprovalRepositoryImpl) Create(ctx context.Context, approval *model
 
 func (r *loanApprovalRepositoryImpl) GetByLoanID(ctx context.Context, loanID int) (*models.LoanApproval, error) {
 	query := `
-		SELECT id, loan_id, field_validator_employee_id, approval_date,
+		SELECT id, loan_id, field_validator_employee_id, approved_at,
 		       proof_image_url, created_at
 		FROM loan_approvals WHERE loan_id = $1
 	`
@@ -63,7 +63,7 @@ func (r *loanApprovalRepositoryImpl) GetByLoanID(ctx context.Context, loanID int
 
 func (r *loanApprovalRepositoryImpl) GetByID(ctx context.Context, id int) (*models.LoanApproval, error) {
 	query := `
-		SELECT id, loan_id, field_validator_employee_id, approval_date,
+		SELECT id, loan_id, field_validator_employee_id, approved_at,
 		       proof_image_url, created_at
 		FROM loan_approvals WHERE id = $1
 	`
@@ -83,7 +83,7 @@ func (r *loanApprovalRepositoryImpl) GetByID(ctx context.Context, id int) (*mode
 func (r *loanApprovalRepositoryImpl) Update(ctx context.Context, approval *models.LoanApproval) error {
 	query := `
 		UPDATE loan_approvals SET
-			field_validator_employee_id = $1, approval_date = $2,
+			field_validator_employee_id = $1, approved_at = $2,
 			proof_image_url = $3
 		WHERE id = $4
 	`

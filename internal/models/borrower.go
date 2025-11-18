@@ -4,8 +4,8 @@ import "time"
 
 type Borrower struct {
 	ID                int       `json:"id" db:"id"`
-	BorrowerIDNumber  string    `json:"borrower_id_number" db:"borrower_id_number"`
-	FullName          string    `json:"full_name" db:"full_name"`
+	BorrowerIDNumber  string    `json:"borrower_id_number" db:"id_number"`
+	FullName          string    `json:"full_name" db:"name"`
 	Email             string    `json:"email" db:"email"`
 	Phone             string    `json:"phone" db:"phone"`
 	Address           string    `json:"address" db:"address"`
