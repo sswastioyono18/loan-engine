@@ -42,8 +42,11 @@ COPY --from=builder /app/migrate .
 # Copy the migrations directory
 COPY --from=builder /app/migrations/ ./migrations/
 
+# Copy entrypoint script
+COPY entrypoint.sh .
+
 # Change ownership of the binaries to the non-root user
-RUN chown appuser:appuser main migrate
+RUN chown appuser:appuser main migrate entrypoint.sh && chmod +x entrypoint.sh
 
 # Switch to the non-root user
 USER appuser
@@ -52,4 +55,4 @@ USER appuser
 EXPOSE 8080
 
 # Run the application
-CMD ["./main"]
+CMD ["./entrypoint.sh"]

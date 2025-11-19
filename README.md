@@ -4,14 +4,14 @@ A RESTful API for managing loan applications with state transitions from propose
 
 ## Tech Stack
 
-- **Language**: Go 1.19+
+- **Language**: Go 1.24+
 - **Database**: PostgreSQL 15
 - **Router**: Chi v5
 - **Database Access**: SQLX
 - **Migration**: Goose
 - **Caching**: Redis 7
 - **Architecture**: Repository pattern + Service layer
-- **Testing**: Mockery for mocks
+- **Testing**: Mockery for mocks, Testcontainers for integration tests
 
 
 ## Documentation
@@ -19,6 +19,29 @@ A RESTful API for managing loan applications with state transitions from propose
 - [Requirement](docs/loan_engine_requirements_analysis.md) - Requirement Analysis Docs
 - [API Documentation](docs/API_DOCUMENTATION.md) - Complete API reference
 - [Testing Guide](docs/TESTING.md) - How to test the API
+- [Integration Tests](INTEGRATION_TESTS.md) - Integration testing with Testcontainers
+
+## Testing
+
+### Unit Tests
+```bash
+go test ./... -v
+```
+
+### Integration Tests
+
+#### E2E Test (Full Loan Lifecycle)
+```bash
+# Tests: Create Borrower → Create Loan → Approve → Invest → Disburse
+go test -v -run TestLoanE2EScenario -timeout 5m
+```
+
+#### Basic Loan Creation Test
+```bash
+go test -v -run TestLoanCreationIntegration -timeout 5m
+```
+
+See [INTEGRATION_TESTS.md](INTEGRATION_TESTS.md) for detailed information about integration testing.
 
 ## Contributing
 
