@@ -19,7 +19,6 @@ A RESTful API for managing loan applications with state transitions from propose
 - [Requirement](docs/loan_engine_requirements_analysis.md) - Requirement Analysis Docs
 - [API Documentation](docs/API_DOCUMENTATION.md) - Complete API reference
 - [Testing Guide](docs/TESTING.md) - How to test the API
-- [Integration Tests](INTEGRATION_TESTS.md) - Integration testing with Testcontainers
 
 ## Testing
 
@@ -28,20 +27,13 @@ A RESTful API for managing loan applications with state transitions from propose
 go test ./... -v
 ```
 
-### Integration Tests
-
-#### E2E Test (Full Loan Lifecycle)
+### E2E Test (Full Loan Lifecycle)
 ```bash
-# Tests: Create Borrower → Create Loan → Approve → Invest → Disburse
+# 1. Tests: Create Borrower → Create Loan → Approve → Invest → Disburse
+# 2. Tests: Multiple Invester → Invest → Disburse
+
 go test -v -run TestLoanE2EScenario -timeout 5m
 ```
-
-#### Basic Loan Creation Test
-```bash
-go test -v -run TestLoanCreationIntegration -timeout 5m
-```
-
-See [INTEGRATION_TESTS.md](INTEGRATION_TESTS.md) for detailed information about integration testing.
 
 ## Contributing
 
