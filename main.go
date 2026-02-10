@@ -23,7 +23,6 @@ func main() {
 		log.Println("No .env file found")
 	}
 
-	// Initialize database connection
 	db, err := util.InitDB()
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
